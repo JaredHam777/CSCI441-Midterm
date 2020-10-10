@@ -1,0 +1,38 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+Z:/ssvennard/graphics/MP_Starter/src/main.cpp
+GL/glew.h
+-
+GLFW/glfw3.h
+-
+glm/glm.hpp
+-
+glm/gtc/matrix_transform.hpp
+-
+cmath
+-
+cstdio
+-
+cstdlib
+-
+ctime
+-
+vector
+-
+iostream
+-
+CSCI441/OpenGLUtils.hpp
+-
+CSCI441/objects.hpp
+-
+CSCI441/ShaderProgram.hpp
+-
+CSCI441/SimpleShader.hpp
+-
+
