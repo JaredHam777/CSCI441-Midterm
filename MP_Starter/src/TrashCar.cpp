@@ -4,6 +4,8 @@
 
 
 
+
+
 #include "TrashCar.h"
 
 
@@ -19,15 +21,21 @@ TrashCar::TrashCar(float x, float y, float z, float camRadius, float topBound, f
   _botBound = botBound;
 
 
+
 };
 
 
-void TrashCar::setLightingShaderUandA(LightingShaderUniforms &lightingShaderUniforms, LightingShaderAttributes &lightingShaderAttributes) {
+void TrashCar::setLightingShaderUandA(CSCI441::ShaderProgram &lightingShader, LightingShaderUniforms &lightingShaderUniforms, LightingShaderAttributes &lightingShaderAttributes) {
+
     _lightingShaderUniforms = lightingShaderUniforms;
     _lightingShaderAttributes = lightingShaderAttributes;
+    _shaderProgram = &lightingShader;
 }
 
 void TrashCar::drawTrashCar( glm::mat4 viewMtx, glm::mat4 projMtx) {
+    _shaderProgram->useProgram();
+   // glEnableVertexAttribArray( _lightingShaderAttributes.vPos );
+    //glEnableVertexAttribArray(_lightingShaderAttributes.vNorm);
     glm::mat4 modelMtx(1.0f);
     modelMtx = glm::translate( modelMtx, glm::vec3( _x, _y, _z ) );
     modelMtx = glm::rotate( modelMtx,_carAngle, glm::vec3(0,1,0) );
@@ -40,17 +48,19 @@ void TrashCar::drawWheel(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMt
     glm::vec3 wheelColor(0.18275, 0.17, 0.225);
     glUniform3fv(_lightingShaderUniforms.materialColor, 1, &wheelColor[0]);
 
-    float shinyness = 5.0;
+    float shinyness = 3.0;
     glUniform1f(_lightingShaderUniforms.shinyness,shinyness);
 
     modelMtx = glm::scale( modelMtx, glm::vec3( .5, .5, .5 ) );
- //  modelMtx = glm::scale( modelMtx, glm::vec3( 5, 5, 5 ) );
+
    modelMtx = glm::translate( modelMtx, glm::vec3( 0, 1.5, 0 ) );
     modelMtx = glm::rotate( modelMtx,_wheelRoll, glm::vec3(0,0,1) );
+    //modelMtx = glm::scale( modelMtx, glm::vec3( 5, 5, 5 ) );
+
 
     computeAndSendMatrixUniforms(modelMtx, viewMtx, projMtx);
-     CSCI441::drawSolidTorus(.8,1.0,3,10);
-    CSCI441::drawSolidCube(1.0f);
+    CSCI441::drawSolidTorus(.8,1.0,3,10);
+
 
 }
 void TrashCar::drawWheels(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) {

@@ -6,9 +6,27 @@
 #define MP_TRASHCAR_H
 
 
+// include the OpenGL library headers
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>			// include GLFW framework header
 
+// include GLM libraries and matrix functions
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+
+// include C and C++ libraries
+#include <cmath>				// for cos(), sin() functionality
+#include <cstdio>				// for printf functionality
+#include <cstdlib>			    // for exit functionality
+#include <ctime>			    // for time() functionality
+#include <vector>
+#include <iostream>
+
+// include our class libraries
 #include <CSCI441/OpenGLUtils.hpp>
 #include <CSCI441/objects.hpp>  // for our 3D objects
+#include <CSCI441/ShaderProgram.hpp>    // a wrapper class for Shader Programs
+#include <CSCI441/SimpleShader.hpp>
 #include "LightingShaderStructs.h"
 
 class TrashCar {
@@ -17,7 +35,7 @@ public:
              float rightBound);
 
 
-    void setLightingShaderUandA(LightingShaderUniforms &lightingShaderUniforms,
+    void setLightingShaderUandA(CSCI441::ShaderProgram &lightingShader, LightingShaderUniforms &lightingShaderUniforms,
                                 LightingShaderAttributes &lightingShaderAttributes);
 
     float getX();
@@ -51,6 +69,7 @@ private:
     float _carAngle = 0;
     float _carBounce = 0.0;
     float _carBounceFlip = 0.01;
+    CSCI441::ShaderProgram *_shaderProgram = nullptr;
     LightingShaderUniforms _lightingShaderUniforms;
     LightingShaderAttributes _lightingShaderAttributes;
     void drawCarBody(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx);

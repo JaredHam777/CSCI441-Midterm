@@ -3,7 +3,7 @@ project(MP)
 
 
 
-set(CMAKE_CXX_STANDARD 14)
+Set(CMAKE_CXX_STANDARD 17)
 
 add_executable(MP main.cpp TrashCar.cpp TrashCar.h LightingShaderStructs.h)
 

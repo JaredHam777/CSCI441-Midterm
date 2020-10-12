@@ -16,15 +16,19 @@ struct LightingShaderUniforms {         // stores the locations of all of our sh
     GLint mvpMatrix;
     GLint materialColor;
     GLint normMtx;
-    GLint lightDir;
+    GLint directLightDir;
     GLint camPos;
-    GLint lightColor1;
-    GLint lightColor2;
-    GLint pointLightPos1;
-    GLint pointLightPos2;
+    GLint lightColorDirect;
+    GLint lightColorPoint;
+    GLint lightColorSpotLight;
+    GLint pointLightPos;
+    GLint spotLightPos;
+    GLint spotLightAngle;
+    GLint spotLightVec;
     GLint shinyness;
     GLint abcDropoff;
     GLint modelMtx;
+
 };
 struct LightingShaderAttributes {       // stores the locations of all of our shader attributes
     // add variables to store the new attributes that were created

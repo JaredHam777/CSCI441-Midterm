@@ -16,15 +16,11 @@ glm/glm.hpp
 glm/gtc/matrix_transform.hpp
 -
 
+Z:/ssvennard/graphics/MP_Starter/src/TrashCar.cpp
+TrashCar.h
 Z:/ssvennard/graphics/MP_Starter/src/TrashCar.h
-CSCI441/OpenGLUtils.hpp
--
-CSCI441/objects.hpp
--
-LightingShaderStructs.h
-Z:/ssvennard/graphics/MP_Starter/src/LightingShaderStructs.h
 
-Z:/ssvennard/graphics/MP_Starter/src/main.cpp
+Z:/ssvennard/graphics/MP_Starter/src/TrashCar.h
 GL/glew.h
 -
 GLFW/glfw3.h
@@ -55,6 +51,4 @@ CSCI441/SimpleShader.hpp
 -
 LightingShaderStructs.h
 Z:/ssvennard/graphics/MP_Starter/src/LightingShaderStructs.h
-TrashCar.h
-Z:/ssvennard/graphics/MP_Starter/src/TrashCar.h
 

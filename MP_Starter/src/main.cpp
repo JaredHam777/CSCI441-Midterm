@@ -386,7 +386,7 @@ void drawTree(float size, float x, float z, glm::mat4 viewMtx, glm::mat4 projMtx
 }
 void drawGroundTile(float size, float x, float z, glm::mat4 viewMtx, glm::mat4 projMtx){
     glm::mat4 modelMtx = glm::translate(glm::mat4(1.0f), glm::vec3(x,0,z));
-    modelMtx = glm::scale(modelMtx, glm::vec3(size,.1,size));
+    modelMtx = glm::scale(modelMtx, glm::vec3(size,1,size));
 
     //draw flat ground
 
@@ -407,18 +407,22 @@ void drawGroundTile(float size, float x, float z, glm::mat4 viewMtx, glm::mat4 p
 //
 ////////////////////////////////////////////////////////////////////////////////
 void renderScene(glm::mat4 viewMtx, glm::mat4 projMtx) {
+
+
     // use our lighting shader program
     lightingShader->useProgram();
-    heroTrashCar.drawTrashCar(viewMtx,projMtx);
+    heroTrashCar.drawTrashCar( viewMtx,projMtx);
+
+
     recomputeOrientation();
 
 
     for (treeData current: forest){
         drawTree(current.size, current.x, current.z, viewMtx, projMtx);
     }
-    float tileSize = 10;
-    for (int x = -50; x < 60; x+=10){
-        for (int z = -50; z < 60; z+=10){
+    float tileSize = 4;
+    for (int x = -50; x < 60; x+=tileSize){
+        for (int z = -50; z < 60; z+=tileSize){
             drawGroundTile(tileSize, x,z, viewMtx,projMtx);
         }
     }
@@ -468,7 +472,7 @@ GLFWwindow* setupGLFW() {
     glfwWindowHint( GLFW_DOUBLEBUFFER, GLFW_TRUE );         // request double buffering
 
     // create a window for a given size, with a given title
-    GLFWwindow *window = glfwCreateWindow( WINDOW_WIDTH, WINDOW_HEIGHT, "Assignment 4 - The Main Attraction", nullptr, nullptr );
+    GLFWwindow *window = glfwCreateWindow( WINDOW_WIDTH, WINDOW_HEIGHT, "MP - Shady People", nullptr, nullptr );
     if( !window ) {						// if the window could not be created, NULL is returned
         fprintf( stderr, "[ERROR]: GLFW Window could not be created\n" );
         glfwTerminate();
@@ -526,19 +530,28 @@ void setupScene() {
     lightingShader->useProgram();
     // BIG TODO  set the light direction and color
     //glm::vec3 lightDirection = {-1,-1,-1};
-    glm::vec3 lightColor1 = {1,1,1};
+    glm::vec3 lightColor1 = {1,0,1};
     glm::vec3 lightColor2 = {0,1,0};
+    glm::vec3 lightColorDir = {1,1,1};
 
-    glm::vec3 pointLightPos1 = {20,20,20};
-    glm::vec3 pointLightPos2 = {-20,20,-20};
+    glm::vec3 pointLightPos1 = {20,10,20};
+    glm::vec3 spotLightPos = {-20, 10, -20};
+    glm::vec3 spotLightVec = {0,-1,0};
+    float spotLightAngle = cos(45 * 3.1415/ 180.0 );
 
     glm::vec3 abcDropoff = {1.0f, 0.025f, 0.0055f};
+    glm::vec3 directLightDir = {1,0,1};
 
-    //glUniform3fv(lightingShaderUniforms.lightDir,1,&lightDirection[0]);
-    glUniform3fv(lightingShaderUniforms.lightColor1,1,&lightColor1[0]);
-    glUniform3fv(lightingShaderUniforms.lightColor2,1,&lightColor2[0]);
-    glUniform3fv(lightingShaderUniforms.pointLightPos1,1 ,&pointLightPos1[0]);
-    glUniform3fv(lightingShaderUniforms.pointLightPos2,1, &pointLightPos2[0]);
+
+    glUniform3fv(lightingShaderUniforms.lightColorDirect,1,&lightColorDir[0]);
+    glUniform3fv(lightingShaderUniforms.lightColorPoint,1,&lightColor1[0]);
+    glUniform3fv(lightingShaderUniforms.lightColorSpotLight,1,&lightColor2[0]);
+    glUniform3fv(lightingShaderUniforms.pointLightPos,1 ,&pointLightPos1[0]);
+    glUniform3fv(lightingShaderUniforms.spotLightPos,1, &spotLightPos[0]);
+    glUniform3fv(lightingShaderUniforms.spotLightVec,1, &spotLightVec[0]);
+    glUniform3fv(lightingShaderUniforms.directLightDir,1, &directLightDir[0]);
+
+    glUniform1f(lightingShaderUniforms.spotLightAngle,spotLightAngle);
 
     glUniform3fv(lightingShaderUniforms.abcDropoff,1,&abcDropoff[0]);
 
@@ -552,20 +565,23 @@ void setupShaders() {
     // assign the uniform and attribute locations
     lightingShaderUniforms.materialColor  = lightingShader->getUniformLocation("materialColor");
     lightingShaderUniforms.normMtx  = lightingShader->getUniformLocation("normMtx");
-    lightingShaderUniforms.lightColor1  = lightingShader->getUniformLocation("lightColor1");
-    lightingShaderUniforms.lightColor2  = lightingShader->getUniformLocation("lightColor2");
+    lightingShaderUniforms.lightColorDirect = lightingShader->getUniformLocation("lightColorDirect");
+    lightingShaderUniforms.lightColorPoint  = lightingShader->getUniformLocation("lightColorPoint");
+    lightingShaderUniforms.lightColorSpotLight  = lightingShader->getUniformLocation("lightColorSpotLight");
     lightingShaderUniforms.camPos = lightingShader->getUniformLocation("camPos");
     lightingShaderUniforms.shinyness = lightingShader->getUniformLocation("shinyness");
-    //lightingShaderUniforms.lightDir  = lightingShader->getUniformLocation("lightDir");
-    lightingShaderUniforms.pointLightPos1 = lightingShader->getUniformLocation("pointLightPos1");
-    lightingShaderUniforms.pointLightPos2 = lightingShader->getUniformLocation("pointLightPos2");
+    lightingShaderUniforms.pointLightPos = lightingShader->getUniformLocation("pointLightPos");
+    lightingShaderUniforms.directLightDir  = lightingShader->getUniformLocation("directLightDir");
+    lightingShaderUniforms.spotLightAngle  = lightingShader->getUniformLocation("spotLightAngle");
+    lightingShaderUniforms.spotLightPos = lightingShader->getUniformLocation("spotLightPos");
+    lightingShaderUniforms.spotLightVec = lightingShader->getUniformLocation("spotLightVec");
     lightingShaderUniforms.abcDropoff = lightingShader->getUniformLocation("abcDropoff");
     lightingShaderUniforms.modelMtx = lightingShader->getUniformLocation("modelMtx");
 
     lightingShaderAttributes.vPos         = lightingShader->getAttributeLocation("vPos");
     lightingShaderAttributes.vNorm        = lightingShader->getAttributeLocation("vNorm");
 
-    heroTrashCar.setLightingShaderUandA(lightingShaderUniforms,lightingShaderAttributes);
+    heroTrashCar.setLightingShaderUandA(*lightingShader,lightingShaderUniforms,lightingShaderAttributes);
 }
 void setupBuffers() {
     // expand our struct to store vertex normals
