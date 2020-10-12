@@ -6,6 +6,24 @@
 
 #IncludeRegexTransform: 
 
+Z:/ssvennard/graphics/MP_Starter/src/LightingShaderStructs.h
+GL/glew.h
+-
+GLFW/glfw3.h
+-
+glm/glm.hpp
+-
+glm/gtc/matrix_transform.hpp
+-
+
+Z:/ssvennard/graphics/MP_Starter/src/TrashCar.h
+CSCI441/OpenGLUtils.hpp
+-
+CSCI441/objects.hpp
+-
+LightingShaderStructs.h
+Z:/ssvennard/graphics/MP_Starter/src/LightingShaderStructs.h
+
 Z:/ssvennard/graphics/MP_Starter/src/main.cpp
 GL/glew.h
 -
@@ -35,4 +53,8 @@ CSCI441/ShaderProgram.hpp
 -
 CSCI441/SimpleShader.hpp
 -
+LightingShaderStructs.h
+Z:/ssvennard/graphics/MP_Starter/src/LightingShaderStructs.h
+TrashCar.h
+Z:/ssvennard/graphics/MP_Starter/src/TrashCar.h
 

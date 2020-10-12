@@ -32,6 +32,8 @@
 #include <CSCI441/objects.hpp>  // for our 3D objects
 #include <CSCI441/ShaderProgram.hpp>    // a wrapper class for Shader Programs
 #include <CSCI441/SimpleShader.hpp>
+#include "LightingShaderStructs.h"
+#include "TrashCar.h"
 
 //*************************************************************************************
 //
@@ -56,20 +58,10 @@ glm::vec3 camAngleSky;
 glm::vec3 camPosFirst;
 glm::vec3 camDirFirst;
 
-//location of car
-float carX;
-float carY;
-float carZ;
-//angle of rotation of wheels
-float wheelRoll = 0;
-//angle of car (x/z axes)
-float carAngle = 0;
-//distance of arcball cam from car
-float camRadius = 10;
+TrashCar heroTrashCar(0,0,0, 10, 52,-52,-52,52);
 
-//bounce offset of car, and flipping modifier for each frame
-float carBounce = 0.0;
-float carBounceFlip = 0.01;
+
+
 
 //booleans to allow multiple keys to be held
 bool forward = false;
@@ -82,7 +74,13 @@ bool control = false;
 GLboolean keys[256] = {0};              // keep track of our key states
 
 //chooses camera in PIP
-int cameraChoice = 1;
+int cameraChoice = 2;
+
+
+//TODO: add more hero  choices
+//0 : Trash Car (Steven V.)
+int heroChoice = 0;
+
 
 //holds the info for drawTree()
 struct treeData {
@@ -110,26 +108,8 @@ bool mackHack = false;
 
 // Shader Program information
 CSCI441::ShaderProgram *lightingShader = nullptr;   // the wrapper for our shader program
-struct LightingShaderUniforms {         // stores the locations of all of our shader uniforms
-    // add variables to store the new uniforms that were created
-    GLint mvpMatrix;
-    GLint materialColor;
-    GLint normMtx;
-    GLint lightDir;
-    GLint camPos;
-    GLint lightColor1;
-    GLint lightColor2;
-    GLint pointLightPos1;
-    GLint pointLightPos2;
-    GLint shinyness;
-    GLint abcDropoff;
-    GLint modelMtx;
-} lightingShaderUniforms;
-struct LightingShaderAttributes {       // stores the locations of all of our shader attributes
-    // add variables to store the new attributes that were created
-    GLint vPos;
-    GLint vNorm;
-} lightingShaderAttributes;
+LightingShaderUniforms  lightingShaderUniforms;
+LightingShaderAttributes lightingShaderAttributes;
 
 
 
@@ -164,15 +144,18 @@ void recomputeOrientation() {
         cameraPhi = M_PI/2.0 + .01;
     }
 
-    camPos = glm::vec3(camRadius*sin(cameraTheta)*sin(cameraPhi) +carX,-camRadius*cos(cameraPhi)+carY, -camRadius*cos(cameraTheta)*sin(cameraPhi)+carZ);
-    camDir = {carX,carY,carZ};
+    if (heroChoice == 0) {
+        camPos = glm::vec3(heroTrashCar.getCamRadius() * sin(cameraTheta) * sin(cameraPhi) + heroTrashCar.getX(), -heroTrashCar.getCamRadius() * cos(cameraPhi) + heroTrashCar.getY(),
+                           -heroTrashCar.getCamRadius() * cos(cameraTheta) * sin(cameraPhi) + heroTrashCar.getZ());
+        camDir = {heroTrashCar.getX(), heroTrashCar.getY(), heroTrashCar.getZ()};
 
-    camPosSky = glm::vec3(carX,carY + 20, carZ);
-    camDirSky = {carX,carY,carZ};
-    camAngleSky = glm::normalize(glm::vec3(sin(carAngle),0,cos(carAngle)));
+        camPosSky = glm::vec3(heroTrashCar.getX(), heroTrashCar.getY() + 20, heroTrashCar.getZ());
+        camDirSky = {heroTrashCar.getX(), heroTrashCar.getY(), heroTrashCar.getZ()};
+        camAngleSky = glm::normalize(glm::vec3(sin(heroTrashCar.getCarAngle()), 0, cos(heroTrashCar.getCarAngle())));
 
-    camPosFirst = {carX+ sin(carAngle),carY+carBounce+2,carZ+ cos(carAngle)};
-    camDirFirst =glm::vec3(carX+ 2*sin(carAngle) ,carY+carBounce+2, carZ+ 2*cos(carAngle));
+        camPosFirst = {heroTrashCar.getX() + sin(heroTrashCar.getCarAngle()), heroTrashCar.getY() + heroTrashCar.getCarBounce() + 2, heroTrashCar.getZ() + cos(heroTrashCar.getCarAngle())};
+        camDirFirst = glm::vec3(heroTrashCar.getX() + 2 * sin(heroTrashCar.getCarAngle()), heroTrashCar.getY() + heroTrashCar.getCarBounce() + 2, heroTrashCar.getZ() + 2 * cos(heroTrashCar.getCarAngle()));
+    }
 
 
 }
@@ -211,60 +194,7 @@ void computeAndSendMatrixUniforms(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::ma
 static void error_callback( int error, const char* description ) {
     fprintf( stderr, "[ERROR]: %d\n\t%s\n", error, description );
 }
-void moveCar(){
-    //makes the car bounce upwards and downwards between -.2 and .2
-    if (carBounce > .2 || carBounce < -.2){
-        carBounceFlip = -carBounceFlip;
-        carBounce+=carBounceFlip;
-    }else{
-        carBounce+=carBounceFlip;
-    }
 
-    if (forward == true){
-        carZ+= .1*cos(carAngle);
-        carX+= .1*sin(carAngle);
-        if (wheelRoll >= M_PI*2){
-            wheelRoll = 0;
-        }else{
-            wheelRoll += M_PI/36;
-        }
-    }
-    if (backward == true){
-        carZ-= .1*cos(carAngle);
-        carX-= .1*sin(carAngle);
-        if (wheelRoll <= 0){
-            wheelRoll = M_PI*2;
-        }else{
-            wheelRoll -= M_PI/36;
-        }
-    }
-    if (left == true){
-        carAngle += M_PI/100;
-    }
-    if (right == true){
-        carAngle -= M_PI/100;
-    }
-    if (carAngle >= 2*M_PI){
-        carAngle = 0;
-    }
-    if (carAngle <= -2*M_PI){
-        carAngle = 0;
-    }
-    recomputeOrientation();
-   // std::cout << carX << std::endl;
-    if (carX > 52){
-        carX = 52;
-    }
-    if (carZ > 52){
-        carZ = 52;
-    }
-    if (carX < -52){
-        carX = -52;
-    }
-    if (carZ < -52){
-        carZ = -52;
-    }
-}
 
 static void keyboard_callback( GLFWwindow *window, int key, int scancode, int action, int mods ) {
     if( action == GLFW_PRESS ) {
@@ -349,13 +279,15 @@ static void cursor_callback( GLFWwindow *window, double x, double y ) {
         recomputeOrientation();     //update camera (x,y,z) based on (radius,theta,phi)
     }
     if (leftMouseButton == GLFW_PRESS && control == true){
-        if (mouseX > x){
-            camRadius -= .3;
-        }else if  (mouseX < x){
-            camRadius += .3;
-        }
-        if (camRadius < 1){
-            camRadius = 1;
+        if (heroChoice == 0) {
+            if (mouseX > x) {
+                heroTrashCar.setCamRadius(heroTrashCar.getCamRadius() - .3);
+            } else if (mouseX < x) {
+                heroTrashCar.setCamRadius(heroTrashCar.getCamRadius() + .3);
+            }
+            if (heroTrashCar.getCamRadius() < 1) {
+                heroTrashCar.setCamRadius(1);
+            }
         }
     }
 
@@ -389,10 +321,7 @@ void generateEnvironment() {
     const GLfloat BOTTOM_END_POINT = -GRID_LENGTH / 2.0f - 5;
     const GLfloat TOP_END_POINT = GRID_LENGTH / 2.0f + 5;
     */
-    //init car
-    carX = 0;
-    carY = 0;
-    carZ = 0;
+
 
     //make some trees
     for (int i = 0; i < 50; i++){
@@ -419,86 +348,10 @@ void generateEnvironment() {
 }
 
 
-void drawCarBody(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx){
 
 
 
-    glm::vec3 bodyColor(0.54, 1.0, 0.63);
-    glUniform3fv(lightingShaderUniforms.materialColor, 1, &bodyColor[0]);
 
-    float shinyness = 10;
-    glUniform1f(lightingShaderUniforms.shinyness,shinyness);
-
-
-
-    modelMtx = glm::scale( modelMtx, glm::vec3( 3, 1, 6 ) );
-    modelMtx = glm::translate( modelMtx, glm::vec3( 0, 1+carBounce, 0 ) );
-    computeAndSendMatrixUniforms(modelMtx, viewMtx, projMtx);
-
-    CSCI441::drawSolidCube(1.0f);
-
-}
-void drawCarCab(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx){
-
-
-
-    glm::vec3 cabColor(0.4, 0.44, 0.89);
-    glUniform3fv(lightingShaderUniforms.materialColor, 1, &cabColor[0]);
-
-    float shinyness = 10;
-    glUniform1f(lightingShaderUniforms.shinyness,shinyness);
-
-
-
-    modelMtx = glm::translate( modelMtx, glm::vec3( 0, 1.5+carBounce, -1 ) );
-    modelMtx = glm::scale( modelMtx, glm::vec3( 2.9, 1.5, 3 ) );
-    computeAndSendMatrixUniforms(modelMtx, viewMtx, projMtx);
-    CSCI441::drawSolidCube(1.0f);
-
-}
-
-void drawWheel(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx){
-
-
-    glm::vec3 wheelColor(0.18275, 0.17, 0.225);
-    glUniform3fv(lightingShaderUniforms.materialColor, 1, &wheelColor[0]);
-
-    float shinyness = 5.0;
-    glUniform1f(lightingShaderUniforms.shinyness,shinyness);
-
-
-
-    modelMtx = glm::scale( modelMtx, glm::vec3( .5, .5, .5 ) );
-    modelMtx = glm::translate( modelMtx, glm::vec3( 0, 1.5, 0 ) );
-    modelMtx = glm::rotate( modelMtx,wheelRoll, glm::vec3(0,0,1) );
-
-    computeAndSendMatrixUniforms(modelMtx, viewMtx, projMtx);
-    CSCI441::drawSolidTorus(.8,1.0,3,10);
-
-}
-void drawWheels(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) {
-    float rotAngle = 90.0*M_PI/180.0;
-    glm::mat4 modelMat1 = glm::translate( modelMtx, glm::vec3( 1.7, 0, 2.8 ) );
-    modelMat1 = glm::rotate( modelMat1,rotAngle, glm::vec3(0,1,0) );
-    drawWheel(modelMat1, viewMtx, projMtx);
-
-
-    glm::mat4 modelMat2 = glm::translate( modelMtx, glm::vec3( -1.7, 0, -2.8 ) );
-    modelMat2 = glm::rotate( modelMat2,rotAngle, glm::vec3(0,1,0) );
-    drawWheel(modelMat2, viewMtx, projMtx);
-
-
-    glm::mat4 modelMat3 = glm::translate( modelMtx, glm::vec3( 1.7, 0, -2.8 ) );
-    modelMat3 = glm::rotate( modelMat3,rotAngle, glm::vec3(0,1,0) );
-    drawWheel( modelMat3, viewMtx, projMtx);
-
-
-    glm::mat4 modelMat4 = glm::translate( modelMtx, glm::vec3( -1.7, 0, 2.8 ) );
-    modelMat4 = glm::rotate( modelMat4 ,rotAngle, glm::vec3(0,1,0) );
-    drawWheel(modelMat4, viewMtx, projMtx);
-
-
-}
 //Note: Trees used to be made of cylinders/cones, but the library was causing a memory leak
 void drawTree(float size, float x, float z, glm::mat4 viewMtx, glm::mat4 projMtx ) {
     glm::mat4 modelMtxTotal = glm::translate( glm::mat4(1.0), glm::vec3( x, 0, z ) );
@@ -556,12 +409,8 @@ void drawGroundTile(float size, float x, float z, glm::mat4 viewMtx, glm::mat4 p
 void renderScene(glm::mat4 viewMtx, glm::mat4 projMtx) {
     // use our lighting shader program
     lightingShader->useProgram();
-    glm::mat4 modelMtx(1.0f);
-    modelMtx = glm::translate( modelMtx, glm::vec3( carX, carY, carZ ) );
-    modelMtx = glm::rotate( modelMtx,carAngle, glm::vec3(0,1,0) );
-    drawCarBody(modelMtx, viewMtx, projMtx);
-    drawCarCab(modelMtx, viewMtx, projMtx);
-    drawWheels(modelMtx, viewMtx, projMtx);
+    heroTrashCar.drawTrashCar(viewMtx,projMtx);
+    recomputeOrientation();
 
 
     for (treeData current: forest){
@@ -673,7 +522,7 @@ void setupScene() {
 
     srand( time(nullptr) );	// seed our random number generator
     generateEnvironment();
-  //wa  generateEnvironmentDL();                // create our environment display list
+  //  generateEnvironmentDL();                // create our environment display list
     lightingShader->useProgram();
     // BIG TODO  set the light direction and color
     //glm::vec3 lightDirection = {-1,-1,-1};
@@ -715,6 +564,8 @@ void setupShaders() {
 
     lightingShaderAttributes.vPos         = lightingShader->getAttributeLocation("vPos");
     lightingShaderAttributes.vNorm        = lightingShader->getAttributeLocation("vNorm");
+
+    heroTrashCar.setLightingShaderUandA(lightingShaderUniforms,lightingShaderAttributes);
 }
 void setupBuffers() {
     // expand our struct to store vertex normals
@@ -854,7 +705,12 @@ int main() {
             glfwSetWindowPos(window, xPos, yPos);
             mackHack = true;
         }
-        moveCar();
+
+        if (heroChoice == 0) {
+            heroTrashCar.updateCar(forward, backward, left, right);
+        }
+
+
     }
     delete lightingShader;                                  // delete our shader program
     CSCI441::deleteObjectVBOs();                            // delete our library VBOs

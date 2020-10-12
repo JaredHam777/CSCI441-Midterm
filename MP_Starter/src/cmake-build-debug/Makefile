@@ -122,6 +122,33 @@ MP/fast:
 	$(MAKE) -f CMakeFiles\MP.dir\build.make CMakeFiles/MP.dir/build
 .PHONY : MP/fast
 
+TrashCar.obj: TrashCar.cpp.obj
+
+.PHONY : TrashCar.obj
+
+# target to build an object file
+TrashCar.cpp.obj:
+	$(MAKE) -f CMakeFiles\MP.dir\build.make CMakeFiles/MP.dir/TrashCar.cpp.obj
+.PHONY : TrashCar.cpp.obj
+
+TrashCar.i: TrashCar.cpp.i
+
+.PHONY : TrashCar.i
+
+# target to preprocess a source file
+TrashCar.cpp.i:
+	$(MAKE) -f CMakeFiles\MP.dir\build.make CMakeFiles/MP.dir/TrashCar.cpp.i
+.PHONY : TrashCar.cpp.i
+
+TrashCar.s: TrashCar.cpp.s
+
+.PHONY : TrashCar.s
+
+# target to generate assembly for a file
+TrashCar.cpp.s:
+	$(MAKE) -f CMakeFiles\MP.dir\build.make CMakeFiles/MP.dir/TrashCar.cpp.s
+.PHONY : TrashCar.cpp.s
+
 main.obj: main.cpp.obj
 
 .PHONY : main.obj
@@ -158,6 +185,9 @@ help:
 	@echo ... edit_cache
 	@echo ... MP
 	@echo ... rebuild_cache
+	@echo ... TrashCar.obj
+	@echo ... TrashCar.i
+	@echo ... TrashCar.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s

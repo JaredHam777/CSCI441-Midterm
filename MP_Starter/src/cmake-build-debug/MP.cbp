@@ -82,6 +82,15 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="Z:/ssvennard/graphics/MP_Starter/src/LightingShaderStructs.h">
+			<Option target="MP"/>
+		</Unit>
+		<Unit filename="Z:/ssvennard/graphics/MP_Starter/src/TrashCar.cpp">
+			<Option target="MP"/>
+		</Unit>
+		<Unit filename="Z:/ssvennard/graphics/MP_Starter/src/TrashCar.h">
+			<Option target="MP"/>
+		</Unit>
 		<Unit filename="Z:/ssvennard/graphics/MP_Starter/src/main.cpp">
 			<Option target="MP"/>
 		</Unit>

@@ -5,7 +5,7 @@ project(MP)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(MP main.cpp)
+add_executable(MP main.cpp TrashCar.cpp TrashCar.h LightingShaderStructs.h)
 
 include_directories("Z:/CSCI441/include")
 target_link_directories(MP PUBLIC "Z:/CSCI441/lib")
