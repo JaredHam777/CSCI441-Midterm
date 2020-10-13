@@ -14,6 +14,7 @@
 // include the OpenGL library headers
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>			// include GLFW framework header
+#include <CSCI441/modelLoader.hpp>      // to load in OBJ models
 
 // include GLM libraries and matrix functions
 #include <glm/glm.hpp>
@@ -34,6 +35,11 @@
 #include <CSCI441/SimpleShader.hpp>
 #include "LightingShaderStructs.h"
 #include "TrashCar.h"
+#include "PistonCar.h"
+#define STB_IMAGE_IMPLEMENTATION
+
+//TODO: make sure this is located correctly
+#include "CSCI441/stb_image.h"
 
 //*************************************************************************************
 //
@@ -47,6 +53,9 @@ const GLint WINDOW_WIDTH = 840, WINDOW_HEIGHT = 680;
 int leftMouseButton;    	 				// status of the mouse button
 double mouseX = -99999, mouseY = -99999;    // last known X and Y of the mouse
 
+CSCI441::ModelLoader* rollercoasterRail = nullptr;  // assign as a null pointer to delay creation until
+CSCI441::ModelLoader* rollercoasterTrack = nullptr;  // assign as a null pointer to delay creation until
+CSCI441::ModelLoader* rollercoasterSupport = nullptr;  // assign as a null pointer to delay creation until
 
 glm::vec3 camPos;            				// camera POSITION in cartesian coordinates
 GLdouble cameraTheta, cameraPhi;            // camera DIRECTION in spherical coordinates
@@ -59,16 +68,17 @@ glm::vec3 camPosFirst;
 glm::vec3 camDirFirst;
 
 TrashCar heroTrashCar(0,0,0, 10, 52,-52,-52,52);
+PistonCar pistonCar(0,0,0, 10, 52,-52,-52,52);
 
 
 
 
 //booleans to allow multiple keys to be held
-bool forward = false;
-bool backward = false;
-bool left = false;
-bool right = false;
-bool control = false;
+bool heroForward = false;
+bool heroBackward = false;
+bool heroLeft = false;
+bool heroRight = false;
+bool heroControl = false;
 
 
 GLboolean keys[256] = {0};              // keep track of our key states
@@ -156,6 +166,18 @@ void recomputeOrientation() {
         camPosFirst = {heroTrashCar.getX() + sin(heroTrashCar.getCarAngle()), heroTrashCar.getY() + heroTrashCar.getCarBounce() + 2, heroTrashCar.getZ() + cos(heroTrashCar.getCarAngle())};
         camDirFirst = glm::vec3(heroTrashCar.getX() + 2 * sin(heroTrashCar.getCarAngle()), heroTrashCar.getY() + heroTrashCar.getCarBounce() + 2, heroTrashCar.getZ() + 2 * cos(heroTrashCar.getCarAngle()));
     }
+    if (heroChoice == 1) {
+        camPos = glm::vec3(pistonCar.getCamRadius() * sin(cameraTheta) * sin(cameraPhi) + pistonCar.getX(), -pistonCar.getCamRadius() * cos(cameraPhi) + pistonCar.getY(),
+                           -pistonCar.getCamRadius() * cos(cameraTheta) * sin(cameraPhi) + pistonCar.getZ());
+        camDir = {pistonCar.getX(), pistonCar.getY(), pistonCar.getZ()};
+
+        camPosSky = glm::vec3(pistonCar.getX(), pistonCar.getY() + 20, pistonCar.getZ());
+        camDirSky = {pistonCar.getX(), pistonCar.getY(), pistonCar.getZ()};
+        camAngleSky = glm::normalize(glm::vec3(sin(pistonCar.getCarAngle()), 0, cos(pistonCar.getCarAngle())));
+
+        camPosFirst = {pistonCar.getX() + sin(pistonCar.getCarAngle()), pistonCar.getY() + pistonCar.getCarBounce() + 2, pistonCar.getZ() + cos(pistonCar.getCarAngle())};
+        camDirFirst = glm::vec3(pistonCar.getX() + 2 * sin(pistonCar.getCarAngle()), pistonCar.getY() + pistonCar.getCarBounce() + 2, pistonCar.getZ() + 2 * cos(pistonCar.getCarAngle()));
+    }
 
 
 }
@@ -201,23 +223,23 @@ static void keyboard_callback( GLFWwindow *window, int key, int scancode, int ac
         switch( key ) {
             case GLFW_KEY_ESCAPE:
             case GLFW_KEY_Q:
-                glfwSetWindowShouldClose(window, GLFW_TRUE);
+                glfwSetWindowShouldClose(window, GLU_TRUE);
                 break;
 
             case GLFW_KEY_W:
-                forward = true;
+                heroForward = true;
                 break;
             case GLFW_KEY_S:
-                backward = true;
+                heroBackward = true;
                 break;
             case GLFW_KEY_A:
-                left = true;
+                heroLeft = true;
                 break;
             case GLFW_KEY_D:
-                right = true;
+                heroRight = true;
                 break;
             case GLFW_KEY_LEFT_CONTROL:
-                control = true;
+                heroControl = true;
                 break;
             case GLFW_KEY_1:
                 cameraChoice = 1;
@@ -225,6 +247,8 @@ static void keyboard_callback( GLFWwindow *window, int key, int scancode, int ac
             case GLFW_KEY_2:
                 cameraChoice = 2;
                 break;
+            case GLFW_KEY_TAB:
+                heroChoice = (heroChoice + 1)%4;
             default: break; // to remove CLion warning
         }
 
@@ -233,23 +257,23 @@ static void keyboard_callback( GLFWwindow *window, int key, int scancode, int ac
         switch( key ) {
             case GLFW_KEY_ESCAPE:
             case GLFW_KEY_Q:
-                glfwSetWindowShouldClose(window, GLFW_TRUE);
+                glfwSetWindowShouldClose(window, GLU_TRUE);
                 break;
 
             case GLFW_KEY_W:
-                forward = false;
+                heroForward = false;
                 break;
             case GLFW_KEY_S:
-                backward = false;
+                heroBackward = false;
                 break;
             case GLFW_KEY_A:
-                left = false;
+                heroLeft = false;
                 break;
             case GLFW_KEY_D:
-                right = false;
+                heroRight = false;
                 break;
             case GLFW_KEY_LEFT_CONTROL:
-                control = false;
+                heroControl = false;
                 break;
             default:
                 break; // to remove CLion warning
@@ -264,7 +288,7 @@ static void cursor_callback( GLFWwindow *window, double x, double y ) {
         mouseX = x;
         mouseY = y;
     }
-    if(leftMouseButton == GLFW_PRESS && control == false) {
+    if(leftMouseButton == GLFW_PRESS && heroControl == false) {
         if (mouseX > x){
             cameraTheta -= .05;
         }else if  (mouseX < x){
@@ -278,7 +302,7 @@ static void cursor_callback( GLFWwindow *window, double x, double y ) {
 
         recomputeOrientation();     //update camera (x,y,z) based on (radius,theta,phi)
     }
-    if (leftMouseButton == GLFW_PRESS && control == true){
+    if (leftMouseButton == GLFW_PRESS && heroControl == true){
         if (heroChoice == 0) {
             if (mouseX > x) {
                 heroTrashCar.setCamRadius(heroTrashCar.getCamRadius() - .3);
@@ -412,14 +436,28 @@ void renderScene(glm::mat4 viewMtx, glm::mat4 projMtx) {
     // use our lighting shader program
     lightingShader->useProgram();
     heroTrashCar.drawTrashCar( viewMtx,projMtx);
+    pistonCar.drawTrashCar(viewMtx, projMtx);
+
+
+
 
 
     recomputeOrientation();
 
 
+
     for (treeData current: forest){
         drawTree(current.size, current.x, current.z, viewMtx, projMtx);
     }
+
+
+    //TODO: need to fix placment and scale.  It gets placed in a random location everytime it runs
+    computeAndSendMatrixUniforms(glm::mat4(1), viewMtx, projMtx);
+    rollercoasterRail->draw(lightingShaderAttributes.vPos );
+    rollercoasterTrack->draw(lightingShaderAttributes.vPos );
+    rollercoasterSupport->draw(lightingShaderAttributes.vPos );
+
+
     float tileSize = 5;
     for (int x = -50; x < 60; x+=10){
         for (int z = -50; z < 60; z+=10){
@@ -427,6 +465,9 @@ void renderScene(glm::mat4 viewMtx, glm::mat4 projMtx) {
         }
     }
 
+    //draw rollercoaster:
+    //**note, these are coming out a little squished on the y axis, so something is happening in drawGroundTile that does this.
+    //If you place this before
 
 
     // draw our grid
@@ -468,8 +509,8 @@ GLFWwindow* setupGLFW() {
     glfwWindowHint( GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE );        // request OpenGL Core Profile context
     glfwWindowHint( GLFW_CONTEXT_VERSION_MAJOR, 4 );	// request OpenGL v4.X
     glfwWindowHint( GLFW_CONTEXT_VERSION_MINOR, 1 );	// request OpenGL vX.1
-    glfwWindowHint( GLFW_RESIZABLE, GLFW_FALSE );		    // do not allow our window to be able to be resized
-    glfwWindowHint( GLFW_DOUBLEBUFFER, GLFW_TRUE );         // request double buffering
+    glfwWindowHint( GLFW_RESIZABLE, GLU_FALSE );		    // do not allow our window to be able to be resized
+    glfwWindowHint( GLFW_DOUBLEBUFFER, GLU_TRUE );         // request double buffering
 
     // create a window for a given size, with a given title
     GLFWwindow *window = glfwCreateWindow( WINDOW_WIDTH, WINDOW_HEIGHT, "MP - Shady People", nullptr, nullptr );
@@ -526,7 +567,7 @@ void setupScene() {
 
     srand( time(nullptr) );	// seed our random number generator
     generateEnvironment();
-  //  generateEnvironmentDL();                // create our environment display list
+    //  generateEnvironmentDL();                // create our environment display list
     lightingShader->useProgram();
     // BIG TODO  set the light direction and color
     //glm::vec3 lightDirection = {-1,-1,-1};
@@ -560,10 +601,11 @@ void setupScene() {
 
     float shinyness = 0.5;
     glUniform1f(lightingShaderUniforms.shinyness,shinyness);
+
 }
 
 void setupShaders() {
-    lightingShader = new CSCI441::ShaderProgram( "shaders/mp.v.glsl", "shaders/mp.f.glsl" );
+    lightingShader = new CSCI441::ShaderProgram( "shaders/mp.v.glsl", "CSCI441/shaders/mp.f.glsl" );
     lightingShaderUniforms.mvpMatrix      = lightingShader->getUniformLocation("mvpMatrix");
     // assign the uniform and attribute locations
     lightingShaderUniforms.materialColor  = lightingShader->getUniformLocation("materialColor");
@@ -586,9 +628,20 @@ void setupShaders() {
     lightingShaderAttributes.vNorm        = lightingShader->getAttributeLocation("vNorm");
 
     heroTrashCar.setLightingShaderUandA(*lightingShader,lightingShaderUniforms,lightingShaderAttributes);
+    pistonCar.setLightingShaderUandA(*lightingShader,lightingShaderUniforms,lightingShaderAttributes);
+
 }
 void setupBuffers() {
     // expand our struct to store vertex normals
+    rollercoasterRail = new CSCI441::ModelLoader();
+    rollercoasterRail->loadModelFile( "meshes/rollercoaster-rail.obj" );
+
+    rollercoasterTrack = new CSCI441::ModelLoader();
+    rollercoasterTrack->loadModelFile( "meshes/rollercoaster-track.obj" );
+
+    rollercoasterSupport = new CSCI441::ModelLoader();
+    rollercoasterSupport->loadModelFile( "meshes/rollercoaster-supports.obj" );
+
     struct VertexNormal {
         GLfloat x, y, z;
         GLfloat xNorm,yNorm,zNorm;
@@ -727,7 +780,9 @@ int main() {
         }
 
         if (heroChoice == 0) {
-            heroTrashCar.updateCar(forward, backward, left, right);
+            heroTrashCar.updateCar(heroForward, heroBackward, heroLeft, heroRight);
+        } else  if(heroChoice == 1) {
+            pistonCar.updateCar(heroForward, heroBackward, heroLeft, heroRight);
         }
 
 
