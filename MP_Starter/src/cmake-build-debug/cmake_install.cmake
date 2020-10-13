@@ -1,4 +1,4 @@
-# Install script for directory: Z:/ssvennard/graphics/MP_Starter/src
+# Install script for directory: Z:/ssvennard/graphics/mp_stuff/CSCI441-Midterm/MP_Starter/src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -40,5 +40,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "Z:/ssvennard/graphics/MP_Starter/src/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "Z:/ssvennard/graphics/mp_stuff/CSCI441-Midterm/MP_Starter/src/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

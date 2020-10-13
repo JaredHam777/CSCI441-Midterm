@@ -8,28 +8,28 @@
 		<Option virtualFolders="CMake Files\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="Z:/ssvennard/graphics/MP_Starter/src/cmake-build-debug"/>
+				<Option working_dir="Z:/ssvennard/graphics/mp_stuff/CSCI441-Midterm/MP_Starter/src/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;Z:/ssvennard/graphics/MP_Starter/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;Z:/ssvennard/graphics/MP_Starter/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;Z:/ssvennard/graphics/MP_Starter/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;Z:/ssvennard/graphics/MP_Starter/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;Z:/ssvennard/graphics/mp_stuff/CSCI441-Midterm/MP_Starter/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;Z:/ssvennard/graphics/mp_stuff/CSCI441-Midterm/MP_Starter/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;Z:/ssvennard/graphics/mp_stuff/CSCI441-Midterm/MP_Starter/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;Z:/ssvennard/graphics/mp_stuff/CSCI441-Midterm/MP_Starter/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
-				<Option working_dir="Z:/ssvennard/graphics/MP_Starter/src/cmake-build-debug"/>
+				<Option working_dir="Z:/ssvennard/graphics/mp_stuff/CSCI441-Midterm/MP_Starter/src/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;Z:/ssvennard/graphics/MP_Starter/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;Z:/ssvennard/graphics/MP_Starter/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;Z:/ssvennard/graphics/MP_Starter/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;Z:/ssvennard/graphics/MP_Starter/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;Z:/ssvennard/graphics/mp_stuff/CSCI441-Midterm/MP_Starter/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;Z:/ssvennard/graphics/mp_stuff/CSCI441-Midterm/MP_Starter/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;Z:/ssvennard/graphics/mp_stuff/CSCI441-Midterm/MP_Starter/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;Z:/ssvennard/graphics/mp_stuff/CSCI441-Midterm/MP_Starter/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="MP">
-				<Option output="Z:/ssvennard/graphics/MP_Starter/src/cmake-build-debug/MP.exe" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="Z:/ssvennard/graphics/MP_Starter/src/cmake-build-debug"/>
+				<Option output="Z:/ssvennard/graphics/mp_stuff/CSCI441-Midterm/MP_Starter/src/cmake-build-debug/MP.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="Z:/ssvennard/graphics/mp_stuff/CSCI441-Midterm/MP_Starter/src/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
@@ -43,15 +43,15 @@
 					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/9.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;Z:/ssvennard/graphics/MP_Starter/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 MP"/>
-					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;Z:/ssvennard/graphics/MP_Starter/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;Z:/ssvennard/graphics/MP_Starter/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;Z:/ssvennard/graphics/MP_Starter/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;Z:/ssvennard/graphics/mp_stuff/CSCI441-Midterm/MP_Starter/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 MP"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;Z:/ssvennard/graphics/mp_stuff/CSCI441-Midterm/MP_Starter/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;Z:/ssvennard/graphics/mp_stuff/CSCI441-Midterm/MP_Starter/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;Z:/ssvennard/graphics/mp_stuff/CSCI441-Midterm/MP_Starter/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="MP/fast">
-				<Option output="Z:/ssvennard/graphics/MP_Starter/src/cmake-build-debug/MP.exe" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="Z:/ssvennard/graphics/MP_Starter/src/cmake-build-debug"/>
+				<Option output="Z:/ssvennard/graphics/mp_stuff/CSCI441-Midterm/MP_Starter/src/cmake-build-debug/MP.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="Z:/ssvennard/graphics/mp_stuff/CSCI441-Midterm/MP_Starter/src/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
@@ -65,36 +65,36 @@
 					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/9.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;Z:/ssvennard/graphics/MP_Starter/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 MP/fast"/>
-					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;Z:/ssvennard/graphics/MP_Starter/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;Z:/ssvennard/graphics/MP_Starter/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;Z:/ssvennard/graphics/MP_Starter/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;Z:/ssvennard/graphics/mp_stuff/CSCI441-Midterm/MP_Starter/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 MP/fast"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;Z:/ssvennard/graphics/mp_stuff/CSCI441-Midterm/MP_Starter/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;Z:/ssvennard/graphics/mp_stuff/CSCI441-Midterm/MP_Starter/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;Z:/ssvennard/graphics/mp_stuff/CSCI441-Midterm/MP_Starter/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="Z:/ssvennard/graphics/MP_Starter/src/cmake-build-debug"/>
+				<Option working_dir="Z:/ssvennard/graphics/mp_stuff/CSCI441-Midterm/MP_Starter/src/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;Z:/ssvennard/graphics/MP_Starter/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;Z:/ssvennard/graphics/MP_Starter/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;Z:/ssvennard/graphics/MP_Starter/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;Z:/ssvennard/graphics/MP_Starter/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;Z:/ssvennard/graphics/mp_stuff/CSCI441-Midterm/MP_Starter/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;Z:/ssvennard/graphics/mp_stuff/CSCI441-Midterm/MP_Starter/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;Z:/ssvennard/graphics/mp_stuff/CSCI441-Midterm/MP_Starter/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;Z:/ssvennard/graphics/mp_stuff/CSCI441-Midterm/MP_Starter/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="Z:/ssvennard/graphics/MP_Starter/src/LightingShaderStructs.h">
+		<Unit filename="Z:/ssvennard/graphics/mp_stuff/CSCI441-Midterm/MP_Starter/src/LightingShaderStructs.h">
 			<Option target="MP"/>
 		</Unit>
-		<Unit filename="Z:/ssvennard/graphics/MP_Starter/src/TrashCar.cpp">
+		<Unit filename="Z:/ssvennard/graphics/mp_stuff/CSCI441-Midterm/MP_Starter/src/TrashCar.cpp">
 			<Option target="MP"/>
 		</Unit>
-		<Unit filename="Z:/ssvennard/graphics/MP_Starter/src/TrashCar.h">
+		<Unit filename="Z:/ssvennard/graphics/mp_stuff/CSCI441-Midterm/MP_Starter/src/TrashCar.h">
 			<Option target="MP"/>
 		</Unit>
-		<Unit filename="Z:/ssvennard/graphics/MP_Starter/src/main.cpp">
+		<Unit filename="Z:/ssvennard/graphics/mp_stuff/CSCI441-Midterm/MP_Starter/src/main.cpp">
 			<Option target="MP"/>
 		</Unit>
-		<Unit filename="Z:/ssvennard/graphics/MP_Starter/src/CMakeLists.txt">
+		<Unit filename="Z:/ssvennard/graphics/mp_stuff/CSCI441-Midterm/MP_Starter/src/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
 	</Project>

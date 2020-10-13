@@ -1,5 +1,4 @@
 #version 410 core
-
 // uniform inputs
 
 // varying inputs

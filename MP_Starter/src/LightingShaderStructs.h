@@ -24,6 +24,7 @@ struct LightingShaderUniforms {         // stores the locations of all of our sh
     GLint pointLightPos;
     GLint spotLightPos;
     GLint spotLightAngle;
+    GLint spotLightFallOffAngle;
     GLint spotLightVec;
     GLint shinyness;
     GLint abcDropoff;

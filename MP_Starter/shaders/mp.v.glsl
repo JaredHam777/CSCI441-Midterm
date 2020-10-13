@@ -1,6 +1,4 @@
-
 #version 410 core
-
 
 // uniform inputs
 uniform mat4 mvpMatrix;                 // the precomputed Model-View-Projection Matrix
@@ -15,6 +13,7 @@ uniform vec3 spotLightPos;
 uniform vec3 spotLightVec;
 uniform vec3 directLightDir;
 uniform float spotLightAngle;
+uniform float spotLightFallOffAngle;
 //uniform vec3 pointLightPos2;
 
 //cam position
@@ -88,24 +87,42 @@ void main() {
 
     //attenuation
     colorPt1 = (colorPt1+colorPt1Spec) / (abcDropoff.x + abcDropoff.y*length(lightVec1) + abcDropoff.z * length(lightVec1) * length(lightVec1));
-/*
+
     //spot light code
 
-    vec3 colorSpot;
+    vec3 colorSpot = vec3(0,0,0);
 
     vec3 lightVec2 = vec3(spotLightPos.x-partialtransform.x, spotLightPos.y-partialtransform.y, spotLightPos.z - partialtransform.z);
     vec3 lightVec2Norm = normalize(lightVec2);
 
     float spotLightAngleToPoint = dot(-1*lightVec2Norm,normalize(spotLightVec));
+    float dotProd2 = dot(lightVec2Norm,normVecWorld);
 
+    vec3 hVec2 = normalize(lightVec2Norm + normalize(vec3(camPos.x-partialtransform.x, camPos.y - partialtransform.y, camPos.z - partialtransform.z)));
+    float dotProd2Spec = dot(hVec2, normVecWorld);
     //values with a smaller angle will have a larger cos value
-    if (spotLightAngleToPoint <= spotLightAngle){
-        colorSpot = vec3(0,0,0);
+    if (spotLightAngleToPoint < spotLightAngle){
+        if (spotLightAngleToPoint < spotLightFallOffAngle){
+            colorSpot = vec3(0,0,0);
+        }else{
+            //diffuse
+            if (dotProd2 < 0){
+                colorSpot = vec3(0,0,0);
+            }else{
+                colorSpot = lightColorSpotLight * materialColor * dotProd2;
+            }
+            //specular
+            if (dotProd2Spec < 0){
+                colorSpot += vec3(0,0,0);
+            }else{
+                colorSpot += lightColorSpotLight  * materialColor * pow(dotProd2Spec,shinyness);
+            }
+            //scale back color by distance
+            colorSpot = colorSpot * spotLightAngleToPoint/spotLightAngle;
+        }
     }else{
         //colorSpot = lightColorSpotLight * materialColor;
         //diffuse
-
-        float dotProd2 = dot(lightVec2Norm,normVecWorld);
         if (dotProd2 < 0){
             colorSpot = vec3(0,0,0);
         }else{
@@ -114,9 +131,6 @@ void main() {
 
 
         //specular
-
-        vec3 hVec2 = normalize(lightVec2Norm + normalize(vec3(camPos.x-partialtransform.x, camPos.y - partialtransform.y, camPos.z - partialtransform.z)));
-        float dotProd2Spec = dot(hVec2, normVecWorld);
         if (dotProd2Spec < 0){
             colorSpot += vec3(0,0,0);
         }else{
@@ -125,9 +139,9 @@ void main() {
 
 
     }
-    */
 
-  //  colorSpot = colorSpot / (abcDropoff.x + abcDropoff.y*length(lightVec2) + abcDropoff.z * length(lightVec2) * length(lightVec2));
+
+   // colorSpot = colorSpot / (abcDropoff.x + abcDropoff.y*length(lightVec2) + abcDropoff.z * length(lightVec2) * length(lightVec2));
 
 
     //directional light
@@ -161,9 +175,9 @@ void main() {
 
 
     //ONLY ADD AMBIENT ONCE (5% of material color at the moment, as multicolor lights will be complex)
-    vec3 colorPtAmb = materialColor * 0.05 ;
+    vec3 colorPtAmb = materialColor * 0.05;
    //final color output
-    color = colorPt1 + dirColor + colorDirSpec + colorPtAmb;
+    color = colorPt1 + dirColor + colorDirSpec + colorSpot + colorPtAmb;
 
 
     // transform & output the vertex in clip space

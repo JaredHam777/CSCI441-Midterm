@@ -420,9 +420,9 @@ void renderScene(glm::mat4 viewMtx, glm::mat4 projMtx) {
     for (treeData current: forest){
         drawTree(current.size, current.x, current.z, viewMtx, projMtx);
     }
-    float tileSize = 4;
-    for (int x = -50; x < 60; x+=tileSize){
-        for (int z = -50; z < 60; z+=tileSize){
+    float tileSize = 5;
+    for (int x = -50; x < 60; x+=10){
+        for (int z = -50; z < 60; z+=10){
             drawGroundTile(tileSize, x,z, viewMtx,projMtx);
         }
     }
@@ -535,9 +535,10 @@ void setupScene() {
     glm::vec3 lightColorDir = {1,1,1};
 
     glm::vec3 pointLightPos1 = {20,10,20};
-    glm::vec3 spotLightPos = {-20, 10, -20};
+    glm::vec3 spotLightPos = {-20, 15, -20};
     glm::vec3 spotLightVec = {0,-1,0};
-    float spotLightAngle = cos(45 * 3.1415/ 180.0 );
+    float spotLightAngle = cos(25 * M_PI/ 180.0 );
+    float fallOffAngle = cos(45 * M_PI/180);
 
     glm::vec3 abcDropoff = {1.0f, 0.025f, 0.0055f};
     glm::vec3 directLightDir = {1,0,1};
@@ -550,6 +551,8 @@ void setupScene() {
     glUniform3fv(lightingShaderUniforms.spotLightPos,1, &spotLightPos[0]);
     glUniform3fv(lightingShaderUniforms.spotLightVec,1, &spotLightVec[0]);
     glUniform3fv(lightingShaderUniforms.directLightDir,1, &directLightDir[0]);
+
+    glUniform1f(lightingShaderUniforms.spotLightFallOffAngle, fallOffAngle);
 
     glUniform1f(lightingShaderUniforms.spotLightAngle,spotLightAngle);
 
@@ -573,6 +576,7 @@ void setupShaders() {
     lightingShaderUniforms.pointLightPos = lightingShader->getUniformLocation("pointLightPos");
     lightingShaderUniforms.directLightDir  = lightingShader->getUniformLocation("directLightDir");
     lightingShaderUniforms.spotLightAngle  = lightingShader->getUniformLocation("spotLightAngle");
+    lightingShaderUniforms.spotLightFallOffAngle  = lightingShader->getUniformLocation("spotLightFallOffAngle");
     lightingShaderUniforms.spotLightPos = lightingShader->getUniformLocation("spotLightPos");
     lightingShaderUniforms.spotLightVec = lightingShader->getUniformLocation("spotLightVec");
     lightingShaderUniforms.abcDropoff = lightingShader->getUniformLocation("abcDropoff");

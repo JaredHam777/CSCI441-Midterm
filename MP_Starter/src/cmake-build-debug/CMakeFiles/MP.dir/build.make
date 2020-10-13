@@ -42,10 +42,10 @@ RM = "C:\Program Files\JetBrains\CLion 2019.3.4\bin\cmake\win\bin\cmake.exe" -E 
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = Z:\ssvennard\graphics\MP_Starter\src
+CMAKE_SOURCE_DIR = Z:\ssvennard\graphics\mp_stuff\CSCI441-Midterm\MP_Starter\src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = Z:\ssvennard\graphics\MP_Starter\src\cmake-build-debug
+CMAKE_BINARY_DIR = Z:\ssvennard\graphics\mp_stuff\CSCI441-Midterm\MP_Starter\src\cmake-build-debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/MP.dir/depend.make
@@ -59,30 +59,30 @@ include CMakeFiles/MP.dir/flags.make
 CMakeFiles/MP.dir/main.cpp.obj: CMakeFiles/MP.dir/flags.make
 CMakeFiles/MP.dir/main.cpp.obj: CMakeFiles/MP.dir/includes_CXX.rsp
 CMakeFiles/MP.dir/main.cpp.obj: ../main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=Z:\ssvennard\graphics\MP_Starter\src\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/MP.dir/main.cpp.obj"
-	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\MP.dir\main.cpp.obj -c Z:\ssvennard\graphics\MP_Starter\src\main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=Z:\ssvennard\graphics\mp_stuff\CSCI441-Midterm\MP_Starter\src\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/MP.dir/main.cpp.obj"
+	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\MP.dir\main.cpp.obj -c Z:\ssvennard\graphics\mp_stuff\CSCI441-Midterm\MP_Starter\src\main.cpp
 
 CMakeFiles/MP.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/MP.dir/main.cpp.i"
-	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E Z:\ssvennard\graphics\MP_Starter\src\main.cpp > CMakeFiles\MP.dir\main.cpp.i
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E Z:\ssvennard\graphics\mp_stuff\CSCI441-Midterm\MP_Starter\src\main.cpp > CMakeFiles\MP.dir\main.cpp.i
 
 CMakeFiles/MP.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MP.dir/main.cpp.s"
-	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S Z:\ssvennard\graphics\MP_Starter\src\main.cpp -o CMakeFiles\MP.dir\main.cpp.s
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S Z:\ssvennard\graphics\mp_stuff\CSCI441-Midterm\MP_Starter\src\main.cpp -o CMakeFiles\MP.dir\main.cpp.s
 
 CMakeFiles/MP.dir/TrashCar.cpp.obj: CMakeFiles/MP.dir/flags.make
 CMakeFiles/MP.dir/TrashCar.cpp.obj: CMakeFiles/MP.dir/includes_CXX.rsp
 CMakeFiles/MP.dir/TrashCar.cpp.obj: ../TrashCar.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=Z:\ssvennard\graphics\MP_Starter\src\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/MP.dir/TrashCar.cpp.obj"
-	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\MP.dir\TrashCar.cpp.obj -c Z:\ssvennard\graphics\MP_Starter\src\TrashCar.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=Z:\ssvennard\graphics\mp_stuff\CSCI441-Midterm\MP_Starter\src\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/MP.dir/TrashCar.cpp.obj"
+	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\MP.dir\TrashCar.cpp.obj -c Z:\ssvennard\graphics\mp_stuff\CSCI441-Midterm\MP_Starter\src\TrashCar.cpp
 
 CMakeFiles/MP.dir/TrashCar.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/MP.dir/TrashCar.cpp.i"
-	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E Z:\ssvennard\graphics\MP_Starter\src\TrashCar.cpp > CMakeFiles\MP.dir\TrashCar.cpp.i
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E Z:\ssvennard\graphics\mp_stuff\CSCI441-Midterm\MP_Starter\src\TrashCar.cpp > CMakeFiles\MP.dir\TrashCar.cpp.i
 
 CMakeFiles/MP.dir/TrashCar.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MP.dir/TrashCar.cpp.s"
-	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S Z:\ssvennard\graphics\MP_Starter\src\TrashCar.cpp -o CMakeFiles\MP.dir\TrashCar.cpp.s
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S Z:\ssvennard\graphics\mp_stuff\CSCI441-Midterm\MP_Starter\src\TrashCar.cpp -o CMakeFiles\MP.dir\TrashCar.cpp.s
 
 # Object files for target MP
 MP_OBJECTS = \
@@ -98,7 +98,7 @@ MP.exe: CMakeFiles/MP.dir/build.make
 MP.exe: CMakeFiles/MP.dir/linklibs.rsp
 MP.exe: CMakeFiles/MP.dir/objects1.rsp
 MP.exe: CMakeFiles/MP.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=Z:\ssvennard\graphics\MP_Starter\src\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable MP.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=Z:\ssvennard\graphics\mp_stuff\CSCI441-Midterm\MP_Starter\src\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable MP.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\MP.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -111,6 +111,6 @@ CMakeFiles/MP.dir/clean:
 .PHONY : CMakeFiles/MP.dir/clean
 
 CMakeFiles/MP.dir/depend:
-	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" Z:\ssvennard\graphics\MP_Starter\src Z:\ssvennard\graphics\MP_Starter\src Z:\ssvennard\graphics\MP_Starter\src\cmake-build-debug Z:\ssvennard\graphics\MP_Starter\src\cmake-build-debug Z:\ssvennard\graphics\MP_Starter\src\cmake-build-debug\CMakeFiles\MP.dir\DependInfo.cmake --color=$(COLOR)
+	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" Z:\ssvennard\graphics\mp_stuff\CSCI441-Midterm\MP_Starter\src Z:\ssvennard\graphics\mp_stuff\CSCI441-Midterm\MP_Starter\src Z:\ssvennard\graphics\mp_stuff\CSCI441-Midterm\MP_Starter\src\cmake-build-debug Z:\ssvennard\graphics\mp_stuff\CSCI441-Midterm\MP_Starter\src\cmake-build-debug Z:\ssvennard\graphics\mp_stuff\CSCI441-Midterm\MP_Starter\src\cmake-build-debug\CMakeFiles\MP.dir\DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/MP.dir/depend
 
