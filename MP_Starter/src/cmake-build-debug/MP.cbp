@@ -85,6 +85,12 @@
 		<Unit filename="Z:/ssvennard/graphics/mp_stuff/CSCI441-Midterm/MP_Starter/src/LightingShaderStructs.h">
 			<Option target="MP"/>
 		</Unit>
+		<Unit filename="Z:/ssvennard/graphics/mp_stuff/CSCI441-Midterm/MP_Starter/src/PistonCar.cpp">
+			<Option target="MP"/>
+		</Unit>
+		<Unit filename="Z:/ssvennard/graphics/mp_stuff/CSCI441-Midterm/MP_Starter/src/PistonCar.h">
+			<Option target="MP"/>
+		</Unit>
 		<Unit filename="Z:/ssvennard/graphics/mp_stuff/CSCI441-Midterm/MP_Starter/src/TrashCar.cpp">
 			<Option target="MP"/>
 		</Unit>

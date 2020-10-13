@@ -122,6 +122,33 @@ MP/fast:
 	$(MAKE) -f CMakeFiles\MP.dir\build.make CMakeFiles/MP.dir/build
 .PHONY : MP/fast
 
+PistonCar.obj: PistonCar.cpp.obj
+
+.PHONY : PistonCar.obj
+
+# target to build an object file
+PistonCar.cpp.obj:
+	$(MAKE) -f CMakeFiles\MP.dir\build.make CMakeFiles/MP.dir/PistonCar.cpp.obj
+.PHONY : PistonCar.cpp.obj
+
+PistonCar.i: PistonCar.cpp.i
+
+.PHONY : PistonCar.i
+
+# target to preprocess a source file
+PistonCar.cpp.i:
+	$(MAKE) -f CMakeFiles\MP.dir\build.make CMakeFiles/MP.dir/PistonCar.cpp.i
+.PHONY : PistonCar.cpp.i
+
+PistonCar.s: PistonCar.cpp.s
+
+.PHONY : PistonCar.s
+
+# target to generate assembly for a file
+PistonCar.cpp.s:
+	$(MAKE) -f CMakeFiles\MP.dir\build.make CMakeFiles/MP.dir/PistonCar.cpp.s
+.PHONY : PistonCar.cpp.s
+
 TrashCar.obj: TrashCar.cpp.obj
 
 .PHONY : TrashCar.obj
@@ -185,6 +212,9 @@ help:
 	@echo ... edit_cache
 	@echo ... MP
 	@echo ... rebuild_cache
+	@echo ... PistonCar.obj
+	@echo ... PistonCar.i
+	@echo ... PistonCar.s
 	@echo ... TrashCar.obj
 	@echo ... TrashCar.i
 	@echo ... TrashCar.s

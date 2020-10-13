@@ -1,4 +1,5 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/MP.dir/PistonCar.cpp.obj"
   "CMakeFiles/MP.dir/TrashCar.cpp.obj"
   "CMakeFiles/MP.dir/main.cpp.obj"
   "MP.exe"

@@ -452,10 +452,16 @@ void renderScene(glm::mat4 viewMtx, glm::mat4 projMtx) {
 
 
     //TODO: need to fix placment and scale.  It gets placed in a random location everytime it runs
-    computeAndSendMatrixUniforms(glm::mat4(1), viewMtx, projMtx);
-    rollercoasterRail->draw(lightingShaderAttributes.vPos );
-    rollercoasterTrack->draw(lightingShaderAttributes.vPos );
-    rollercoasterSupport->draw(lightingShaderAttributes.vPos );
+
+    glm::mat4 modelMtxRoller = glm::scale(glm::mat4(1.0f), glm::vec3(6,1,3.5));
+    computeAndSendMatrixUniforms(modelMtxRoller, viewMtx, projMtx);
+    glm::vec3 rollerColor(1,1,1);
+    glUniform3fv(lightingShaderUniforms.materialColor, 1, &rollerColor[0]);
+    float shinyness = 5;
+    glUniform1f(lightingShaderUniforms.shinyness,shinyness);
+    rollercoasterRail->draw(lightingShaderAttributes.vPos, lightingShaderAttributes.vNorm );
+    rollercoasterTrack->draw(lightingShaderAttributes.vPos, lightingShaderAttributes.vNorm );
+    rollercoasterSupport->draw(lightingShaderAttributes.vPos, lightingShaderAttributes.vNorm );
 
 
     float tileSize = 5;
@@ -582,7 +588,7 @@ void setupScene() {
     float fallOffAngle = cos(45 * M_PI/180);
 
     glm::vec3 abcDropoff = {1.0f, 0.025f, 0.0055f};
-    glm::vec3 directLightDir = {1,0,1};
+    glm::vec3 directLightDir = {1,0,0};
 
 
     glUniform3fv(lightingShaderUniforms.lightColorDirect,1,&lightColorDir[0]);
@@ -605,7 +611,7 @@ void setupScene() {
 }
 
 void setupShaders() {
-    lightingShader = new CSCI441::ShaderProgram( "shaders/mp.v.glsl", "CSCI441/shaders/mp.f.glsl" );
+    lightingShader = new CSCI441::ShaderProgram( "shaders/mp.v.glsl", "shaders/mp.f.glsl" );
     lightingShaderUniforms.mvpMatrix      = lightingShader->getUniformLocation("mvpMatrix");
     // assign the uniform and attribute locations
     lightingShaderUniforms.materialColor  = lightingShader->getUniformLocation("materialColor");
